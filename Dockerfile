@@ -1,10 +1,17 @@
-FROM pytorch/pytorch:nightly-devel-cuda10.0-cudnn7
-ENV PATH /usr/local/nvidia/bin:/usr/local/cuda/bin:${PATH}
+FROM ufoym/deepo:pytorch-py36-cu101
 
-RUN apt-get update -y
+ENV APP /code
+ENV LC_ALL C.UTF-8
+ENV LANG C.UTF-8
 
-RUN pip install numpy scipy matplotlib librosa==0.6.0 tensorflow tensorboardX inflect==0.2.5 Unidecode==1.0.22 pillow jupyter
+RUN mkdir /models
+WORKDIR $APP
 
-ADD apex /apex/
-WORKDIR /apex/
-RUN pip install -v --no-cache-dir --global-option="--cpp_ext" --global-option="--cuda_ext" .
+COPY ./requirements.txt .
+RUN pip install -r requirements.txt
+
+COPY . .
+
+ENV FLASK_APP app.py
+
+CMD [ "bin/dev_run.sh" ]
