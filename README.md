@@ -1,15 +1,14 @@
-#
-Tacotron 2 TTS wrapped by REST API
+# Tacotron 2 TTS wrapped by REST API
 
 ```bash
 docker run --runtime=nvidia \
     -e NVIDIA_DRIVER_CAPABILITIES=compute,utility \
     -e NVIDIA_VISIBLE_DEVICES=all -p 5000:5000 \
     --mount type=bind,source="$(pwd)"/models,target=/models \
+    --mount type=bind,source="$(pwd)"/tts-rest-api-engine,target=/code \
+    --mount type=bind,source="$(pwd)"/samples,target=/tmp \
     -it tacotron 
 ```
-
-# Tacotron 2 (without wavenet)
 
 PyTorch implementation of [Natural TTS Synthesis By Conditioning
 Wavenet On Mel Spectrogram Predictions](https://arxiv.org/pdf/1712.05884.pdf). 
