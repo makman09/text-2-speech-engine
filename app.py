@@ -6,6 +6,7 @@ import json
 import numpy as np
 from scipy.io.wavfile import write
 import torch
+from uuid import uuid4
 
 from hparams import create_hparams
 from model import Tacotron2
@@ -35,10 +36,12 @@ denoiser = Denoiser(waveglow)
 def hello_world():
     return 'Hello, World!'
 
-@app.route('/sample', methods=['GET'])
-def get_sample():
+@app.route('/sample/<file_id>', methods=['GET'])
+def get_sample(file_id):
+    # TODO: check if file exists
+
     return send_file(
-        "/tmp/test.wav",
+        "/tmp/{}.wav".format(file_id),
         mimetype="audio/wav",
         as_attachment=True,
         attachment_filename="test.wav"
@@ -48,6 +51,7 @@ def get_sample():
 def inference():
     data = json.loads(request.data)
     text = data.get("text")
+    filename = uuid4().hex
 
     # Convert text into vector
     sequence = np.array(
@@ -68,12 +72,13 @@ def inference():
 
     # Write to file
     write(
-        '/tmp/test.wav',
+        '/tmp/{}.wav'.format(filename),
         hparams.sampling_rate,
         audio_denoised.cpu().numpy()[0]
     )
 
     return jsonify({
         "status": "success",
-        "messsage": "we got it dude"
+        "messsage": "we got it dude",
+        "link": filename
     })
