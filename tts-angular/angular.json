@@ -22,15 +22,14 @@
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
-            "aot": false,
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
-            "styles": [
-              "src/styles.scss"
-            ],
-            "scripts": []
+            "aot": true,
+            "assets": ["src/favicon.ico", "src/assets"],
+            "styles": ["./node_modules/bootstrap/dist/css/bootstrap.css", "src/styles.scss"],
+            "scripts": [
+              "./node_modules/jquery/dist/jquery.js",
+              "./node_modules/bootstrap/dist/js/bootstrap.js",
+              "./node_modules/wavesurfer.js/dist/wavesurfer.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -45,7 +44,6 @@
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
-              "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
