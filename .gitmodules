@@ -1,4 +1,3 @@
-[submodule "waveglow"]
+[submodule "tts-flask/waveglow"]
 	path = tts-flask/waveglow
 	url = https://github.com/NVIDIA/waveglow
-	branch = master
