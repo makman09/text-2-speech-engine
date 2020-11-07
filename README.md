@@ -8,15 +8,13 @@ docker build -t server .
 docker run \
 	--env NVIDIA_VISIBLE_DEVICES=all \
 	-p 5000:5000 \
-	-v ./models/models \
-	-it server 
+	-v ./models:/models \
+	-it tts-rest-api-engine_server 
 ```
 
 Is it possible to create a docker volume from a directory path?
 
 ```bash
-docker volume create my-vol
+	docker volume create my-vol
 ```
-
-I don't understand enough about how Docker volumes work without mounting to be able to craft a solution from this .. 
 

@@ -1,8 +1,10 @@
-version: '3.8'
+version: '2.3'
 services:
     server:
         container_name: server
         build: ./tts-flask
+        # https://github.com/docker/compose/issues/6691#issuecomment-705995189
+        runtime: nvidia
         ports:
             - "5000:5000"
         environment:
@@ -10,8 +12,10 @@ services:
             - FLASK_APP_CONFIG=Development
             - FLASK_DEBUG=1
             - FLASK_ENV=development
+            - NVIDIA_VISIBLE_DEVICES=all
         volumes:
             - ./tts-flask:/code
+            - /home/makthird/Desktop/jarviz/models:/models
         networks:
             - frontend
     client:
