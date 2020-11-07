@@ -69,7 +69,8 @@
           },
           "configurations": {
             "production": {
-              "browserTarget": "tts-angular:build:production"
+              "browserTarget": "tts-angular:build:production",
+              "proxyConfig": "src/proxy.conf.json"
             }
           }
         },

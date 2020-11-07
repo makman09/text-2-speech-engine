@@ -1,0 +1,32 @@
+version: '3.8'
+services:
+    server:
+        container_name: server
+        build: ./tts-flask
+        ports:
+            - "5000:5000"
+        environment:
+            - FLASK_APP=app.py
+            - FLASK_APP_CONFIG=Development
+            - FLASK_DEBUG=1
+            - FLASK_ENV=development
+        volumes:
+            - ./tts-flask:/code
+        networks:
+            - frontend
+    client:
+        container_name: client
+        build: ./tts-angular
+        command: yarn start
+        volumes:
+            - ./tts-angular:/home/node/client
+            # https://jdlm.info/articles/2019/09/06/lessons-building-node-app-docker.html
+            # Helps not overwrite the node_modules with host
+            - /home/node/client/node_modules
+        ports:
+            - "4200:4200"
+        networks:
+            - frontend
+networks:
+    frontend:
+    backend:
