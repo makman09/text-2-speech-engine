@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "dev-start": "ng serve --host=0.0.0.0 --disable-host-check --proxy-config=src/proxy.conf.json --source-map=true",
+    "start": "ng serve --host 0.0.0.0",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",

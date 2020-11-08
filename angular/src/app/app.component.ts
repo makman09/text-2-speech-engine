@@ -2,31 +2,25 @@ import { AfterViewInit } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import * as $ from 'jquery';
 import * as WaveSurfer from 'wavesurfer.js';
+import { RestAPIService } from './rest-api.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit, AfterViewInit {
-  title = 'tts-angular';
+export class AppComponent implements AfterViewInit {
+  text: string = '';
+  textMax = 200;
 
+  link: string = null;
   wavesurfer: any;
 
-  ngOnInit() {
-
-  }
+  constructor(
+    private apiService: RestAPIService
+  ) { }
 
   ngAfterViewInit() {
-    const textMax = 200;
-    $('#count_message').html('0 / ' + textMax );
-
-    $('#text').keyup(() => {
-      const textLength = ($('#text').val() as string).length;
-      const textRemaining = textMax - textLength;
-
-      $('#count_message').html(textLength + ' / ' + textMax);
-    });
 
     this.wavesurfer = WaveSurfer.create({
       container: '#waveform',
@@ -41,13 +35,20 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   load() {
     this.wavesurfer.load('http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3');
-    this.wavesurfer.on('ready', () => {
-      // console.log('ahoy matey')
-      // this.wavesurfer.play();
-    });
+    this.wavesurfer.on('ready', () => { /** Dead code */ });
   }
 
   playPause() {
     this.wavesurfer.playPause();
+  }
+
+  generate() {
+    this.apiService.inference(this.text)
+      .subscribe(resp => {
+        console.log('success', resp);
+
+        this.link = resp["link"]
+        this.wavesurfer.load(`/api/sample/${this.link}`);
+      });
   }
 }

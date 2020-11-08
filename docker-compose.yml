@@ -21,7 +21,7 @@ services:
     client:
         container_name: client
         build: ./angular
-        command: yarn start
+        command: yarn dev-start
         volumes:
             - ./angular:/home/node/client
             # https://jdlm.info/articles/2019/09/06/lessons-building-node-app-docker.html
