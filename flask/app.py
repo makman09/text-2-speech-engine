@@ -22,6 +22,7 @@ hparams = create_hparams()
 hparams.sampling_rate = 22050
 
 checkpoint_path = "/models/attenborough_checkpoint_824800"
+checkpoint_path = "/models/Celestia_24988_0.071"
 model = load_model(hparams)
 model.load_state_dict(torch.load(checkpoint_path)['state_dict'])
 
@@ -74,6 +75,7 @@ def inference():
     write(
         '/tmp/{}.wav'.format(filename),
         hparams.sampling_rate,
+        # audio[0].data.cpu().numpy()
         audio_denoised.cpu().numpy()[0]
     )
 
