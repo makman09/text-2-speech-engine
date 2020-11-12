@@ -5,3 +5,4 @@ This repo is an implementation of Tacotron 2 wrapped underneath a web applicatio
 ### Current Goals
 
 - [ ] Integrate [maximizing mutual information](https://arxiv.org/pdf/1909.01145.pdf) into the loss function
+- [ ] Create APRAbet converter to break down text representation into lower dimensional phenome representation

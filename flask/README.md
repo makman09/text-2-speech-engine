@@ -3,11 +3,15 @@
 ```bash
 docker run --runtime=nvidia \
     -e NVIDIA_DRIVER_CAPABILITIES=compute,utility \
-    -e NVIDIA_VISIBLE_DEVICES=all -p 5000:5000 \
+    -e NVIDIA_VISIBLE_DEVICES=all \
+
+docker run \
+    -p 5000:5000 \
+    --cpus 1 \
     --mount type=bind,source="$(pwd)"/models,target=/models \
-    --mount type=bind,source="$(pwd)"/tts-rest-api-engine,target=/code \
+    --mount type=bind,source="$(pwd)"/tts-rest-api-engine/flask,target=/code \
     --mount type=bind,source="$(pwd)"/samples,target=/tmp \
-    -it tacotron 
+    -it tts-rest-api-engine_server 
 ```
 
 PyTorch implementation of [Natural TTS Synthesis By Conditioning
